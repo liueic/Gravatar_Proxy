@@ -11,7 +11,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gravatar-proxy ./
 
 FROM alpine:latest
 
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates wget
 
 WORKDIR /app
 
@@ -26,5 +26,8 @@ ENV MAX_CACHE_BYTES=268435456
 ENV UPSTREAM_BASE=https://www.gravatar.com
 
 EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/healthz || exit 1
 
 CMD ["./gravatar-proxy"]

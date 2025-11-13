@@ -1,0 +1,46 @@
+# Cache directory (runtime generated)
+cache/
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README.md
+LICENSE
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test files
+*_test.go
+*.test
+
+# Build artifacts
+gravatar-proxy
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Temporary files
+*.tmp
+*.log
+*.out
+
+# CI/CD (not needed in image)
+.github/
+
+# Docker files (not needed in image)
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.yaml
+
