@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -12,6 +13,7 @@ type Config struct {
 	CacheTTL       time.Duration
 	MaxCacheBytes  int64
 	UpstreamBase   string
+	AllowedOrigins []string
 }
 
 func Load() (*Config, error) {
@@ -31,12 +33,25 @@ func Load() (*Config, error) {
 		return nil, err
 	}
 
+	allowedOriginsStr := getEnv("ALLOWED_ORIGINS", "")
+	var allowedOrigins []string
+	if allowedOriginsStr != "" {
+		origins := strings.Split(allowedOriginsStr, ",")
+		for _, origin := range origins {
+			origin = strings.TrimSpace(origin)
+			if origin != "" {
+				allowedOrigins = append(allowedOrigins, origin)
+			}
+		}
+	}
+
 	return &Config{
-		Port:          port,
-		CacheDir:      cacheDir,
-		CacheTTL:      cacheTTL,
-		MaxCacheBytes: maxCacheBytes,
-		UpstreamBase:  upstreamBase,
+		Port:           port,
+		CacheDir:       cacheDir,
+		CacheTTL:       cacheTTL,
+		MaxCacheBytes:  maxCacheBytes,
+		UpstreamBase:   upstreamBase,
+		AllowedOrigins: allowedOrigins,
 	}, nil
 }
 

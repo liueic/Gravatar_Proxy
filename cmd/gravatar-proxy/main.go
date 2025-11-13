@@ -29,6 +29,7 @@ func main() {
         "cache_ttl", cfg.CacheTTL,
         "max_cache_bytes", cfg.MaxCacheBytes,
         "upstream_base", cfg.UpstreamBase,
+        "allowed_origins", cfg.AllowedOrigins,
     )
 
     c, err := cache.New(cfg.CacheDir, cfg.CacheTTL, cfg.MaxCacheBytes)
